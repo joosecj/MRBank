@@ -2,7 +2,6 @@ package com.mr.bank.entities;
 
 import jakarta.persistence.*;
 
-import java.time.Instant;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,8 +11,8 @@ public class Account {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private Integer agency;
-    private Instant number;
+    private Long agency;
+    private Long number;
     private Double balance;
     @OneToOne
     @MapsId
@@ -26,7 +25,7 @@ public class Account {
     public Account() {
     }
 
-    public Account(Integer agency, Instant number, Double balance) {
+    public Account(Long agency, Long number, Double balance) {
         this.agency = agency;
         this.number = number;
         this.balance = balance;
@@ -40,19 +39,19 @@ public class Account {
         this.id = id;
     }
 
-    public Integer getAgency() {
+    public Long getAgency(long time) {
         return agency;
     }
 
-    public void setAgency(Integer agency) {
+    public void setAgency(Long agency) {
         this.agency = agency;
     }
 
-    public Instant getNumber() {
+    public Long getNumber(long time) {
         return number;
     }
 
-    public void setNumber(Instant number) {
+    public void setNumber(Long number) {
         this.number = number;
     }
 

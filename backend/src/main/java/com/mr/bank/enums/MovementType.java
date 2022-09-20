@@ -1,4 +1,4 @@
-package com.mr.bank.entities;
+package com.mr.bank.enums;
 
 public enum MovementType {
     REVENUE,

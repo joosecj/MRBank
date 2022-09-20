@@ -1,46 +1,39 @@
-package com.mr.bank.entities;
+package com.mr.bank.dto;
 
-import jakarta.persistence.*;
+
+import com.mr.bank.entities.Client;
 
 import java.time.LocalDate;
 
-@Entity
-@Table(name = "tb_client")
-public class Client {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+public class ClientDTO {
     private Long id;
-    @Column(length = 30)
     private String name;
-    @Column(unique = true)
     private String email;
-    @Column(unique = true)
     private String cpf;
     private LocalDate birthDate;
-    @Column(unique = true)
     private String phone;
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    private Account account;
-    
-    public Client() {
-    }
 
-    public Client(Long id, String name, String email, String cpf, LocalDate birthDate, String phone, Account account) {
+
+    public ClientDTO(Long id, String name, String email, String cpf, LocalDate birthDate, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.phone = phone;
-        this.account = account;
+    }
+
+    public ClientDTO(Client clientEntity) {
+        id = clientEntity.getId();
+        name = clientEntity.getName();
+        email = clientEntity.getEmail();
+        cpf = clientEntity.getCpf();
+        birthDate = clientEntity.getBirthDate();
+        phone = clientEntity.getPhone();
     }
 
     public Long getId() {
         return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
     }
 
     public String getName() {
@@ -83,13 +76,4 @@ public class Client {
         this.phone = phone;
     }
 
-
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
-    }
 }

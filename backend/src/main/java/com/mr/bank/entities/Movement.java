@@ -1,12 +1,13 @@
 package com.mr.bank.entities;
 
 
+import com.mr.bank.enums.MovementType;
 import jakarta.persistence.*;
 
 import java.time.Instant;
 
 @Entity
-@Table(name = "tab_movement")
+@Table(name = "tb_movement")
 public class Movement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
