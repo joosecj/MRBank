@@ -1,16 +1,26 @@
 package com.mr.bank.dto;
 
-
 import com.mr.bank.entities.Client;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.PastOrPresent;
+import jakarta.validation.constraints.Size;
 
 import java.time.LocalDate;
 
 public class ClientDTO {
     private Long id;
+    @Size(min = 3, max = 80, message = "Nome precisar ter de 3 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String name;
+    @Email(message = "Campo requerido")
     private String email;
+    @Size(min = 11, max = 11, message = "Nome precisar ter de 3 a 80 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String cpf;
+    @PastOrPresent(message = "Data não pode ser futura")
     private LocalDate birthDate;
+    @NotBlank(message = "Campo requerido")
     private String phone;
 
 
