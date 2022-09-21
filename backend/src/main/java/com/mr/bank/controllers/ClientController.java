@@ -2,7 +2,6 @@ package com.mr.bank.controllers;
 
 import com.mr.bank.dto.ClientDTO;
 import com.mr.bank.services.ClientService;
-import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,13 +18,13 @@ public class ClientController {
     private ClientService clientService;
 
     @GetMapping(value = "/{id}")
-    public ClientDTO findById(@PathVariable Long id) {
-        return clientService.findById(id);
+    public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
+        return ResponseEntity.ok(clientService.findById(id));
     }
 
     @GetMapping
-    public Page<ClientDTO> findAll(Pageable pageable) {
-        return clientService.findAll(pageable);
+    public ResponseEntity<Page<ClientDTO>> findAll(Pageable pageable) {
+        return ResponseEntity.ok(clientService.findAll(pageable));
     }
 
     @PostMapping
