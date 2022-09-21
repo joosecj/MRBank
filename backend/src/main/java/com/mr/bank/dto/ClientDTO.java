@@ -10,16 +10,18 @@ import java.time.LocalDate;
 
 public class ClientDTO {
     private Long id;
-    @Size(min = 3, max = 80, message = "Nome precisar ter de 3 a 80 caracteres")
+    @Size(min = 3, max = 40, message = "Nome precisar ter mínimo 3 e máximo 40 caracteres")
     @NotBlank(message = "Campo requerido")
     private String name;
-    @Email(message = "Campo requerido")
+    @Email(message = "Email inválido")
+    @NotBlank(message = "Campo requerido")
     private String email;
-    @Size(min = 11, max = 11, message = "Nome precisar ter de 3 a 80 caracteres")
+    @Size(min = 11, max = 11, message = "Nome precisar ter 11 numeros, sem ponto ou traço")
     @NotBlank(message = "Campo requerido")
     private String cpf;
     @PastOrPresent(message = "Data não pode ser futura")
     private LocalDate birthDate;
+    @Size(min = 7, max = 11, message = "Nome precisar ter mínimo 7 e máximo 11 numeros")
     @NotBlank(message = "Campo requerido")
     private String phone;
 
