@@ -1,5 +1,6 @@
 package com.mr.bank.controllers;
 
+import com.mr.bank.dto.AccountDTO;
 import com.mr.bank.dto.ClientDTO;
 import com.mr.bank.services.ClientService;
 import jakarta.validation.Valid;
@@ -11,6 +12,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
+import java.util.List;
 
 @RestController
 @RequestMapping(value = "/clients")
@@ -21,6 +23,12 @@ public class ClientController {
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
         return ResponseEntity.ok(clientService.findById(id));
+    }
+
+    @GetMapping(value = "/{id}/accounts")
+    public ResponseEntity<List<AccountDTO>> findEmployeesByDepartment(@PathVariable Long id) {
+        List<AccountDTO> list = clientService.findEmployeesByDepartment(id);
+        return ResponseEntity.ok(list);
     }
 
     @GetMapping

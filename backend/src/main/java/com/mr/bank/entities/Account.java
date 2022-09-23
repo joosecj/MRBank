@@ -12,10 +12,11 @@ public class Account {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private Long agency;
-    private Long number;
+    private Long numberCc;
     private Double balance;
-    @OneToOne
-    @MapsId
+
+    @ManyToOne
+    @JoinColumn(name = "clients_id")
     private Client client;
 
     @OneToMany(mappedBy = "account")
@@ -25,9 +26,9 @@ public class Account {
     public Account() {
     }
 
-    public Account(Long agency, Long number, Double balance) {
+    public Account(Long agency, Long numberCc, Double balance) {
         this.agency = agency;
-        this.number = number;
+        this.numberCc = numberCc;
         this.balance = balance;
     }
 
@@ -39,7 +40,7 @@ public class Account {
         this.id = id;
     }
 
-    public Long getAgency(long time) {
+    public Long getAgency() {
         return agency;
     }
 
@@ -47,12 +48,12 @@ public class Account {
         this.agency = agency;
     }
 
-    public Long getNumber(long time) {
-        return number;
+    public Long getNumberCc() {
+        return numberCc;
     }
 
-    public void setNumber(Long number) {
-        this.number = number;
+    public void setNumberCc(Long numberCc) {
+        this.numberCc = numberCc;
     }
 
     public Double getBalance() {
@@ -74,4 +75,5 @@ public class Account {
     public List<Movement> getMovementList() {
         return movementList;
     }
+
 }

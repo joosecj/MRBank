@@ -1,11 +1,13 @@
 package com.mr.bank.services;
 
+import com.mr.bank.dto.AccountDTO;
 import com.mr.bank.dto.ClientDTO;
+import com.mr.bank.entities.Account;
 import com.mr.bank.entities.Client;
+import com.mr.bank.repositories.AccountRepository;
+import com.mr.bank.repositories.ClientRepository;
 import com.mr.bank.services.exceptions.DataBaseException;
 import com.mr.bank.services.exceptions.ResourceNotFoundException;
-import com.mr.bank.repositories.ClientRepository;
-
 import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
@@ -16,16 +18,28 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 @Service
 public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
+    @Autowired
+    AccountRepository accountRepository;
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) {
         Client clientEntity = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
         return new ClientDTO(clientEntity);
+    }
+
+    @Transactional(readOnly = true)
+    public List<AccountDTO> findEmployeesByDepartment(Long id) {
+        Optional<Client> result = clientRepository.findById(id);
+        List<Account> list = result.get().getAccounts();
+        return list.stream().map(x -> new AccountDTO(x)).toList();
     }
 
     @Transactional(readOnly = true)
@@ -36,10 +50,16 @@ public class ClientService {
 
     @Transactional(readOnly = false)
     public ClientDTO insertNewClient(ClientDTO clientDTO){
-        Client clientEntity = new Client();
-        copyDtoToEntity(clientDTO, clientEntity);
-        clientEntity = clientRepository.save(clientEntity);
-        return new ClientDTO(clientEntity);
+            Client clientEntity = new Client();
+            copyDtoToEntity(clientDTO, clientEntity);
+            clientEntity = clientRepository.save(clientEntity);
+            Account accountEntity = new Account();
+            accountEntity.setClient(clientEntity);
+            accountEntity.setAgency(0006L);
+            accountEntity.setNumberCc(new Date().getTime());
+            accountEntity.setBalance(0.0D);
+            accountEntity = accountRepository.save(accountEntity);
+            return new ClientDTO(clientEntity);
     }
 
     @Transactional(readOnly = false)
@@ -60,7 +80,7 @@ public class ClientService {
         } catch (EmptyResultDataAccessException e) {
             throw new ResourceNotFoundException("Recurso não encontrado");
         } catch (DataIntegrityViolationException e) {
-            throw new DataBaseException("Falha de integridade rerencial");
+            throw new DataBaseException("Falha de integridade refencial");
         }
 
     }

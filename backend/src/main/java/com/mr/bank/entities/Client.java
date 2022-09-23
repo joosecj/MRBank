@@ -3,6 +3,8 @@ package com.mr.bank.entities;
 import jakarta.persistence.*;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "tb_client")
@@ -19,20 +21,19 @@ public class Client {
     private LocalDate birthDate;
     @Column(unique = true)
     private String phone;
-    @OneToOne(mappedBy = "client", cascade = CascadeType.ALL)
-    private Account account;
+    @OneToMany(mappedBy = "client")
+    private List<Account> accounts = new ArrayList<>();
     
     public Client() {
     }
 
-    public Client(Long id, String name, String email, String cpf, LocalDate birthDate, String phone, Account account) {
+    public Client(Long id, String name, String email, String cpf, LocalDate birthDate, String phone) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.cpf = cpf;
         this.birthDate = birthDate;
         this.phone = phone;
-        this.account = account;
     }
 
     public Long getId() {
@@ -83,13 +84,7 @@ public class Client {
         this.phone = phone;
     }
 
-
-
-    public Account getAccount() {
-        return account;
-    }
-
-    public void setAccount(Account account) {
-        this.account = account;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 }
