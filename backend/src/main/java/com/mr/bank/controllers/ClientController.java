@@ -2,7 +2,10 @@ package com.mr.bank.controllers;
 
 import com.mr.bank.dto.AccountDTO;
 import com.mr.bank.dto.ClientDTO;
+import com.mr.bank.dto.MovementAccountDTO;
+import com.mr.bank.services.AccountService;
 import com.mr.bank.services.ClientService;
+import com.mr.bank.services.MovementService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -19,6 +22,9 @@ import java.util.List;
 public class ClientController {
     @Autowired
     private ClientService clientService;
+
+    @Autowired
+    private MovementService movementService;
 
     @GetMapping(value = "/{id}")
     public ResponseEntity<ClientDTO> findById(@PathVariable Long id) {
@@ -39,6 +45,14 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<ClientDTO> insert(@Valid @RequestBody ClientDTO dto) {
         dto = clientService.insertNewClient(dto);
+        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
+                .buildAndExpand(dto.getId()).toUri();
+        return ResponseEntity.created(uri).body(dto);
+    }
+
+    @PostMapping(value = "/teste")
+    public ResponseEntity<MovementAccountDTO> insert(@Valid @RequestBody MovementAccountDTO dto) {
+        dto = movementService.insertNewMovements(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);

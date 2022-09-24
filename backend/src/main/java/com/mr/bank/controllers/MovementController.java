@@ -1,6 +1,5 @@
 package com.mr.bank.controllers;
 
-import com.mr.bank.dto.ClientDTO;
 import com.mr.bank.dto.MovementAccountDTO;
 import com.mr.bank.dto.MovementDTO;
 import com.mr.bank.services.MovementService;
@@ -26,19 +25,19 @@ public class MovementController {
     }
 
     @GetMapping(value = "/{id}")
-    public ResponseEntity<MovementAccountDTO> findByIdWithClient(@PathVariable Long id) {
+    public ResponseEntity<MovementAccountDTO> findByIdWithMovement(@PathVariable Long id) {
         MovementAccountDTO dto = movementService.findByIdWithMovement(id);
         return ResponseEntity.ok(dto);
     }
 
     @GetMapping
-    public ResponseEntity<List<MovementAccountDTO>> findMovementsWithAccounts() {
+    public ResponseEntity<List<MovementAccountDTO>> findMovementsWithMovements() {
         List<MovementAccountDTO> list = movementService.findByIdWithMovements();
         return ResponseEntity.ok(list);
     }
 
     @PostMapping
-    public ResponseEntity<MovementDTO> insert(@Valid @RequestBody MovementDTO dto) {
+    public ResponseEntity<MovementAccountDTO> insert(@RequestBody @Valid MovementAccountDTO dto) {
         dto = movementService.insertNewMovements(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();

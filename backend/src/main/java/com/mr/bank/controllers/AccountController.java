@@ -2,6 +2,7 @@ package com.mr.bank.controllers;
 
 import com.mr.bank.dto.AccountClientDTO;
 import com.mr.bank.dto.AccountDTO;
+import com.mr.bank.dto.MovementDTO;
 import com.mr.bank.services.AccountService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -33,6 +34,12 @@ public class AccountController {
     @GetMapping
     public ResponseEntity<List<AccountClientDTO>> findEmployeesWithClients() {
         List<AccountClientDTO> list = accountService.findByIdWithClients();
+        return ResponseEntity.ok(list);
+    }
+
+    @GetMapping(value = "/{id}/movements")
+    public ResponseEntity<List<MovementDTO>> findEmployeesByDepartment(@PathVariable Long id) {
+        List<MovementDTO> list = accountService.findAccountsByMovement(id);
         return ResponseEntity.ok(list);
     }
 }

@@ -15,7 +15,8 @@ public class MovementAccountDTO {
     private MovementType movementType;
     private AccountDTO account;
 
-
+    public MovementAccountDTO() {
+    }
 
     public MovementAccountDTO(Long id, LocalDateTime date, Double valueMovement, String description, MovementType movementType, AccountDTO account) {
         this.id = id;
@@ -57,6 +58,10 @@ public class MovementAccountDTO {
 
     public AccountDTO getAccount() {
         return account;
+    }
+
+    public Long getAccountId() {
+        return this.account.getId();
     }
 
 }

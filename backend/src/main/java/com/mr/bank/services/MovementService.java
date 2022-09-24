@@ -12,6 +12,7 @@ import com.mr.bank.repositories.AccountRepository;
 import com.mr.bank.repositories.MovementRepository;
 import com.mr.bank.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -46,26 +47,24 @@ public class MovementService {
     @Transactional(readOnly = true)
     public List<MovementAccountDTO> findByIdWithMovements() {
         List<Movement> result = movementRepository.findByIdWithAccounts();
-        return result.stream().map(x -> new MovementAccountDTO(x)).collect(Collectors.toList());
+        return result.stream().map(MovementAccountDTO::new).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = false)
-    public MovementDTO insertNewMovements(MovementDTO movementDTO){
+    public MovementAccountDTO insertNewMovements(MovementAccountDTO movementAccountDTO){
         Movement movementEntity = new Movement();
-        copyDtoToEntity(movementDTO, movementEntity);
-        Account result = accountRepository.getReferenceById(movementDTO.getId());
+        copyDtoToEntity(movementAccountDTO, movementEntity);
+        Account result = accountRepository.findById(movementAccountDTO.getAccountId()).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
         movementEntity.setAccount(result);
         movementEntity = movementRepository.save(movementEntity);
-        accountRepository.save(result);
-
-        return new MovementDTO(movementEntity);
+        return new MovementAccountDTO(movementEntity);
     }
 
-    private void copyDtoToEntity(MovementDTO movementDTO, Movement movementEntity) {
+    private void copyDtoToEntity(MovementAccountDTO movementAccountDTO, Movement movementEntity) {
         LocalDateTime today = LocalDateTime.ofInstant(Instant.now(), ZoneId.systemDefault());
         movementEntity.setDate(today);
-        movementEntity.setValueMovement(movementDTO.getValueMovement());
-        movementEntity.setDescription(movementDTO.getDescription());
-        movementEntity.setMovementType(movementDTO.getMovementType());
+        movementEntity.setValueMovement(movementAccountDTO.getValueMovement());
+        movementEntity.setDescription(movementAccountDTO.getDescription());
+        movementEntity.setMovementType(movementAccountDTO.getMovementType());
     }
 }
