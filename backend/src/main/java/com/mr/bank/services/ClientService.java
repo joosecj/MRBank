@@ -55,7 +55,7 @@ public class ClientService {
             clientEntity = clientRepository.save(clientEntity);
             Account accountEntity = new Account();
             accountEntity.setClient(clientEntity);
-            accountEntity.setAgency(0006L);
+            accountEntity.setAgency(5555L);
             accountEntity.setNumberCc(new Date().getTime());
             accountEntity.setBalance(0.0D);
             accountEntity = accountRepository.save(accountEntity);
