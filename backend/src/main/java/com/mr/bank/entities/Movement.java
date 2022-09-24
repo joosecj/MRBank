@@ -4,7 +4,7 @@ package com.mr.bank.entities;
 import com.mr.bank.enums.MovementType;
 import jakarta.persistence.*;
 
-import java.time.Instant;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_movement")
@@ -12,8 +12,8 @@ public class Movement {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @Column(columnDefinition = "TIMESTAMP WITHOUT TIME ZONE")
-    private Instant date;
+    @Column(columnDefinition = "TIMESTAMP WITH TIME ZONE")
+    private LocalDateTime date;
     private Double valueMovement;
     private String description;
     @Enumerated(EnumType.STRING)
@@ -25,7 +25,7 @@ public class Movement {
     public Movement() {
     }
 
-    public Movement(Long id, Instant date, Double valueMovement, String description, MovementType movementType) {
+    public Movement(Long id, LocalDateTime date, Double valueMovement, String description, MovementType movementType) {
         this.id = id;
         this.date = date;
         this.valueMovement = valueMovement;
@@ -41,11 +41,11 @@ public class Movement {
         this.id = id;
     }
 
-    public Instant getDate() {
+    public LocalDateTime getDate() {
         return date;
     }
 
-    public void setDate(Instant date) {
+    public void setDate(LocalDateTime date) {
         this.date = date;
     }
 
@@ -73,4 +73,11 @@ public class Movement {
         this.movementType = movementType;
     }
 
+    public Account getAccount() {
+        return account;
+    }
+
+    public void setAccount(Account account) {
+        this.account = account;
+    }
 }
