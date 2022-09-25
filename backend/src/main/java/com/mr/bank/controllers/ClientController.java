@@ -3,7 +3,6 @@ package com.mr.bank.controllers;
 import com.mr.bank.dto.AccountDTO;
 import com.mr.bank.dto.ClientDTO;
 import com.mr.bank.dto.MovementAccountDTO;
-import com.mr.bank.services.AccountService;
 import com.mr.bank.services.ClientService;
 import com.mr.bank.services.MovementService;
 import jakarta.validation.Valid;
@@ -32,8 +31,8 @@ public class ClientController {
     }
 
     @GetMapping(value = "/{id}/accounts")
-    public ResponseEntity<List<AccountDTO>> findEmployeesByDepartment(@PathVariable Long id) {
-        List<AccountDTO> list = clientService.findEmployeesByDepartment(id);
+    public ResponseEntity<List<AccountDTO>> findClientsByAccount(@PathVariable Long id) {
+        List<AccountDTO> list = clientService.findClientsByAccount(id);
         return ResponseEntity.ok(list);
     }
 

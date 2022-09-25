@@ -53,8 +53,13 @@ public class MovementService {
     @Transactional(readOnly = false)
     public MovementAccountDTO insertNewMovements(MovementAccountDTO movementAccountDTO){
         Movement movementEntity = new Movement();
+        Double valueDTO = movementAccountDTO.getMovementType() == MovementType.REVENUE ? movementAccountDTO.getValueMovement() : movementAccountDTO.getValueMovement() * -1;
         copyDtoToEntity(movementAccountDTO, movementEntity);
         Account result = accountRepository.findById(movementAccountDTO.getAccountId()).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        if(result != null) {
+            result.setBalance(result.getBalance() + valueDTO);
+            accountRepository.save(result);
+        }
         movementEntity.setAccount(result);
         movementEntity = movementRepository.save(movementEntity);
         return new MovementAccountDTO(movementEntity);

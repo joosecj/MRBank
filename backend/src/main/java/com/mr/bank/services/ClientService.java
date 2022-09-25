@@ -36,9 +36,9 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true)
-    public List<AccountDTO> findEmployeesByDepartment(Long id) {
-        Optional<Client> result = clientRepository.findById(id);
-        List<Account> list = result.get().getAccounts();
+    public List<AccountDTO> findClientsByAccount(Long id) {
+        Client result = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        List<Account> list = result.getAccounts();
         return list.stream().map(x -> new AccountDTO(x)).toList();
     }
 
@@ -58,7 +58,7 @@ public class ClientService {
             accountEntity.setAgency(5555L);
             accountEntity.setNumberCc(new Date().getTime());
             accountEntity.setBalance(0.0D);
-            accountEntity = accountRepository.save(accountEntity);
+            accountRepository.save(accountEntity);
             return new ClientDTO(clientEntity);
     }
 
