@@ -9,7 +9,7 @@ Projeto desenvolvido teve o objetivo de criar um API Rest de um banco online, ut
 
 <h2>Veja o projeto</h2>
 
-Experimente live demo
+Experimente live demo.
 
 ![](https://i.imgur.com/K7UDxOE.gif)
 
@@ -40,4 +40,3 @@ Criar e executar o projeto em seu ambiente de desenvolvimento local é muito fá
    - Spring Security
    - Maven
    - H2 Database
-   
