@@ -8,6 +8,7 @@ import com.mr.bank.entities.Account;
 import com.mr.bank.entities.Client;
 import com.mr.bank.entities.Movement;
 import com.mr.bank.repositories.AccountRepository;
+import com.mr.bank.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,26 +24,26 @@ public class AccountService {
 
     @Transactional(readOnly = true)
     public AccountDTO findByIdMin(Long id) {
-        Optional<Account> result = accountRepository.findById(id);
-        return new AccountDTO(result.get());
+        Account result = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        return new AccountDTO(result);
     }
 
     @Transactional(readOnly = true)
-    public AccountClientDTO findByIdWithClient(Long id) {
-        Optional<Account> result = accountRepository.findById(id);
-        return new AccountClientDTO(result.get());
+    public AccountClientDTO findAccountByIdWithClient(Long id) {
+        Account result = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        return new AccountClientDTO(result);
     }
 
     @Transactional(readOnly = true)
-    public List<AccountClientDTO> findByIdWithClients() {
+    public List<AccountClientDTO> findAccountsByWithClients() {
         List<Account> result = accountRepository.findByIdWithClients();
         return result.stream().map(x -> new AccountClientDTO(x)).collect(Collectors.toList());
     }
 
     @Transactional(readOnly = true)
-    public List<MovementDTO> findAccountsByMovement(Long id) {
-        Optional<Account> result = accountRepository.findById(id);
-        List<Movement> list = result.get().getMovementList();
+    public List<MovementDTO> findAccountByMovements(Long id) {
+        Account result = accountRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        List<Movement> list = result.getMovementList();
         return list.stream().map(x -> new MovementDTO(x)).toList();
     }
 

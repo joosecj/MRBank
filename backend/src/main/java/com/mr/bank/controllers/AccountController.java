@@ -19,27 +19,27 @@ public class AccountController {
     @Autowired
     private AccountService accountService;
 
+    @GetMapping(value = "/{id}")
+    public ResponseEntity<AccountClientDTO> findByIdWithClient(@PathVariable Long id) {
+        AccountClientDTO dto = accountService.findAccountByIdWithClient(id);
+        return ResponseEntity.ok(dto);
+    }
+
     @GetMapping(value = "/{id}/min")
     public ResponseEntity<AccountDTO> findByIdMin(@PathVariable Long id) {
         AccountDTO dto = accountService.findByIdMin(id);
         return ResponseEntity.ok(dto);
     }
 
-    @GetMapping(value = "/{id}")
-    public ResponseEntity<AccountClientDTO> findByIdWithClient(@PathVariable Long id) {
-        AccountClientDTO dto = accountService.findByIdWithClient(id);
-        return ResponseEntity.ok(dto);
-    }
-
     @GetMapping
-    public ResponseEntity<List<AccountClientDTO>> findEmployeesWithClients() {
-        List<AccountClientDTO> list = accountService.findByIdWithClients();
+    public ResponseEntity<List<AccountClientDTO>> findAccountsWithClients() {
+        List<AccountClientDTO> list = accountService.findAccountsByWithClients();
         return ResponseEntity.ok(list);
     }
 
-    @GetMapping(value = "/{id}/movements")
-    public ResponseEntity<List<MovementDTO>> findEmployeesByDepartment(@PathVariable Long id) {
-        List<MovementDTO> list = accountService.findAccountsByMovement(id);
+    @GetMapping(value = "/{id}/extracts")
+    public ResponseEntity<List<MovementDTO>> findAccountByMovements(@PathVariable Long id) {
+        List<MovementDTO> list = accountService.findAccountByMovements(id);
         return ResponseEntity.ok(list);
     }
 }

@@ -32,7 +32,7 @@ public class ClientController {
 
     @GetMapping(value = "/{id}/accounts")
     public ResponseEntity<List<AccountDTO>> findClientsByAccount(@PathVariable Long id) {
-        List<AccountDTO> list = clientService.findClientsByAccount(id);
+        List<AccountDTO> list = clientService.findClientByAccounts(id);
         return ResponseEntity.ok(list);
     }
 
@@ -44,14 +44,6 @@ public class ClientController {
     @PostMapping
     public ResponseEntity<ClientDTO> insert(@Valid @RequestBody ClientDTO dto) {
         dto = clientService.insertNewClient(dto);
-        URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
-                .buildAndExpand(dto.getId()).toUri();
-        return ResponseEntity.created(uri).body(dto);
-    }
-
-    @PostMapping(value = "/teste")
-    public ResponseEntity<MovementAccountDTO> insert(@Valid @RequestBody MovementAccountDTO dto) {
-        dto = movementService.insertNewMovements(dto);
         URI uri = ServletUriComponentsBuilder.fromCurrentRequest().path("/{id}")
                 .buildAndExpand(dto.getId()).toUri();
         return ResponseEntity.created(uri).body(dto);

@@ -20,7 +20,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class ClientService {
@@ -36,7 +35,7 @@ public class ClientService {
     }
 
     @Transactional(readOnly = true)
-    public List<AccountDTO> findClientsByAccount(Long id) {
+    public List<AccountDTO> findClientByAccounts(Long id) {
         Client result = clientRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
         List<Account> list = result.getAccounts();
         return list.stream().map(x -> new AccountDTO(x)).toList();
@@ -49,17 +48,17 @@ public class ClientService {
     }
 
     @Transactional(readOnly = false)
-    public ClientDTO insertNewClient(ClientDTO clientDTO){
-            Client clientEntity = new Client();
-            copyDtoToEntity(clientDTO, clientEntity);
-            clientEntity = clientRepository.save(clientEntity);
-            Account accountEntity = new Account();
-            accountEntity.setClient(clientEntity);
-            accountEntity.setAgency(5555L);
-            accountEntity.setNumberCc(new Date().getTime());
-            accountEntity.setBalance(0.0D);
-            accountRepository.save(accountEntity);
-            return new ClientDTO(clientEntity);
+    public ClientDTO insertNewClient(ClientDTO clientDTO) {
+        Client clientEntity = new Client();
+        copyDtoToEntity(clientDTO, clientEntity);
+        clientEntity = clientRepository.save(clientEntity);
+        Account accountEntity = new Account();
+        accountEntity.setClient(clientEntity);
+        accountEntity.setAgency(0006L);
+        accountEntity.setNumberCc(new Date().getTime());
+        accountEntity.setBalance(0.0D);
+        accountRepository.save(accountEntity);
+        return new ClientDTO(clientEntity);
     }
 
     @Transactional(readOnly = false)

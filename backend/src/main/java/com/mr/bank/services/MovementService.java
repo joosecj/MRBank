@@ -1,26 +1,20 @@
 package com.mr.bank.services;
 
-import com.mr.bank.dto.AccountDTO;
-import com.mr.bank.dto.ClientDTO;
 import com.mr.bank.dto.MovementAccountDTO;
 import com.mr.bank.dto.MovementDTO;
 import com.mr.bank.entities.Account;
-import com.mr.bank.entities.Client;
 import com.mr.bank.entities.Movement;
 import com.mr.bank.enums.MovementType;
 import com.mr.bank.repositories.AccountRepository;
 import com.mr.bank.repositories.MovementRepository;
 import com.mr.bank.services.exceptions.ResourceNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
-import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -34,14 +28,14 @@ public class MovementService {
 
     @Transactional(readOnly = true)
     public MovementDTO findByIdMin(Long id) {
-        Optional<Movement> result = movementRepository.findById(id);
-        return new MovementDTO(result.get());
+        Movement result = movementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        return new MovementDTO(result);
     }
 
     @Transactional(readOnly = true)
     public MovementAccountDTO findByIdWithMovement(Long id) {
-        Optional<Movement> result = movementRepository.findById(id);
-        return new MovementAccountDTO(result.get());
+        Movement result = movementRepository.findById(id).orElseThrow(() -> new ResourceNotFoundException("Recurso não encontrado"));
+        return new MovementAccountDTO(result);
     }
 
     @Transactional(readOnly = true)
