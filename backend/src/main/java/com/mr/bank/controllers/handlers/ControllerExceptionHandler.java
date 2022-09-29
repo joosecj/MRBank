@@ -43,7 +43,7 @@ public class ControllerExceptionHandler {
     @ExceptionHandler(ConstraintViolationException.class)
     public final ResponseEntity<CustomError> handleConstraintViolationException(ConstraintViolationException e, HttpServletRequest request) {
         HttpStatus status = HttpStatus.BAD_REQUEST;
-        CustomError error = new CustomError(Instant.now(), status.value(), "Dados inválidos", request.getRequestURI());
+        CustomError error = new CustomError(Instant.now(), status.value(), "Usuário cadastrado", request.getRequestURI());
         return ResponseEntity.status(status).body(error);
     }
 }
