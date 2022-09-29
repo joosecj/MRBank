@@ -9,6 +9,7 @@ import com.mr.bank.repositories.ClientRepository;
 import com.mr.bank.services.exceptions.DataBaseException;
 import com.mr.bank.services.exceptions.ResourceNotFoundException;
 import jakarta.persistence.EntityNotFoundException;
+import org.hibernate.exception.ConstraintViolationException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -49,16 +50,21 @@ public class ClientService {
 
     @Transactional(readOnly = false)
     public ClientDTO insertNewClient(ClientDTO clientDTO) {
-        Client clientEntity = new Client();
-        copyDtoToEntity(clientDTO, clientEntity);
-        clientEntity = clientRepository.save(clientEntity);
-        Account accountEntity = new Account();
-        accountEntity.setClient(clientEntity);
-        accountEntity.setAgency(0006L);
-        accountEntity.setNumberCc(new Date().getTime());
-        accountEntity.setBalance(0.0D);
-        accountRepository.save(accountEntity);
-        return new ClientDTO(clientEntity);
+        try {
+            Client clientEntity = new Client();
+            copyDtoToEntity(clientDTO, clientEntity);
+            clientEntity = clientRepository.save(clientEntity);
+            Account accountEntity = new Account();
+            accountEntity.setClient(clientEntity);
+            accountEntity.setAgency(0006L);
+            accountEntity.setNumberCc(new Date().getTime());
+            accountEntity.setBalance(0.0D);
+            accountRepository.save(accountEntity);
+            return new ClientDTO(clientEntity);
+        } catch (ConstraintViolationException e) {
+            throw new ResourceNotFoundException("Recurso não encontrado");
+        }
+
     }
 
     @Transactional(readOnly = false)

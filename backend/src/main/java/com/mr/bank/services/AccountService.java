@@ -2,10 +2,8 @@ package com.mr.bank.services;
 
 import com.mr.bank.dto.AccountClientDTO;
 import com.mr.bank.dto.AccountDTO;
-import com.mr.bank.dto.ClientDTO;
 import com.mr.bank.dto.MovementDTO;
 import com.mr.bank.entities.Account;
-import com.mr.bank.entities.Client;
 import com.mr.bank.entities.Movement;
 import com.mr.bank.repositories.AccountRepository;
 import com.mr.bank.services.exceptions.ResourceNotFoundException;
@@ -14,7 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
