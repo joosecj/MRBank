@@ -2,7 +2,6 @@ package com.mr.bank.controllers;
 
 import com.mr.bank.dto.MovementAccountDTO;
 import com.mr.bank.dto.MovementDTO;
-import com.mr.bank.services.AccountService;
 import com.mr.bank.services.MovementService;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
