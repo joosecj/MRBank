@@ -1,16 +1,19 @@
 package com.mr.bank.dto;
 
-import com.mr.bank.entities.Account;
 import com.mr.bank.entities.Movement;
 import com.mr.bank.enums.MovementType;
-
-import java.time.Instant;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.Size;
 import java.time.LocalDateTime;
 
 public class MovementAccountDTO {
     private Long id;
     private LocalDateTime date;
+    @Positive(message = "Campo não pode ser negativo")
     private Double valueMovement;
+    @Size(min = 3, max = 10, message = "Descrição precisar ter mínimo de 3 e máximo de 10 caracteres")
+    @NotBlank(message = "Campo requerido")
     private String description;
     private MovementType movementType;
     private AccountDTO account;

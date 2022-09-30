@@ -27,7 +27,7 @@ public class ClientService {
     @Autowired
     private ClientRepository clientRepository;
     @Autowired
-    AccountRepository accountRepository;
+    private AccountRepository accountRepository;
 
     @Transactional(readOnly = true)
     public ClientDTO findById(Long id) {

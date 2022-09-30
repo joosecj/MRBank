@@ -20,6 +20,7 @@ public class ClientDTO {
     @NotBlank(message = "Campo requerido")
     private String cpf;
     @PastOrPresent(message = "Data não pode ser futura")
+    @NotBlank(message = "Campo requerido")
     private LocalDate birthDate;
     @Size(min = 7, max = 11, message = "Nome precisar ter mínimo 7 e máximo 11 numeros")
     @NotBlank(message = "Campo requerido")
