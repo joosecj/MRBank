@@ -31,7 +31,6 @@ Criar e executar o projeto em seu ambiente de desenvolvimento local é muito fá
    Link da Collections do postman: https://www.getpostman.com/collections/60ee2f73cf886161ebcc
 
    
-   
    <h2>Tecnologias utlizadas</h2>
    
    - Java
@@ -39,4 +38,4 @@ Criar e executar o projeto em seu ambiente de desenvolvimento local é muito fá
    - JPA
    - Spring Security
    - Maven
-   - H2 Database
+   - H2 Databasee
